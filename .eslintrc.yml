@@ -6,6 +6,7 @@ extends:
   - "plugin:react/recommended"
   - airbnb
   - prettier
+  - "plugin:flowtype/recommended"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
