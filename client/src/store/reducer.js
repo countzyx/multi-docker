@@ -43,6 +43,10 @@ const reducer = (state: FibState = initialState, action: Action) => {
       newState.values = action.payload;
       break;
     }
+    case actionTypes.SET_INDEX: {
+      newState.index = action.payload;
+      break;
+    }
     default: {
       return state;
     }

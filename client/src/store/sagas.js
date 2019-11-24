@@ -4,6 +4,7 @@ import type { Saga } from 'redux-saga';
 import axios from '../shared/axios';
 import * as actions from './actions';
 import * as actionTypes from './actionTypes';
+import * as types from '../shared/types';
 
 export function* fetchIndexesSaga(): Saga<void> {
   try {
@@ -11,6 +12,16 @@ export function* fetchIndexesSaga(): Saga<void> {
     yield put(actions.fetchIndexesSuccess(response.data));
   } catch (error) {
     yield put(actions.fetchIndexesFail(error));
+  }
+}
+
+export function* fetchValueForIndexSaga(action: types.ActionFetchValueForIndexStart): Saga<void> {
+  try {
+    const { payload } = action;
+    const response = yield axios.post('/api/values', { index: payload });
+    yield put(actions.fetchValuesSuccess(response.data));
+  } catch (error) {
+    yield put(actions.fetchValuesFail(error));
   }
 }
 

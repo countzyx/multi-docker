@@ -1,19 +1,27 @@
 // @flow
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
+import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './App.module.css';
+
+const Fib = lazy(() => import('../components/Fib/Fib'));
+const OtherPage = lazy(() => import('../components/OtherPage/OtherPage'));
 
 const App = () => (
   <div className={styles.App}>
     <header className={styles.App_header}>
-      <p>
-        Edit&nbsp;
-        <code>src/App.js</code>
-        &nbsp;and save to reload.
-      </p>
-      <a className={styles.App_link} href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-        Learn React
-      </a>
+      <h1 className={styles.App_title}>Fibonacci Calculator</h1>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/otherpage">OtherPage</NavLink>
     </header>
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/otherpage" component={OtherPage} />
+          <Route path="/" exact component={Fib} />
+          <Redirect to="/" />
+        </Switch>
+      </Suspense>
+    </div>
   </div>
 );
 
