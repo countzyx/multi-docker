@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.mjs",
   "scripts": {
+    "dev": "nodemon",
     "start": "node --experimental-modules main.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +14,7 @@
     "nodemon": "^2.0.1"
   },
   "dependencies": {
+    "esm": "^3.2.25",
     "redis": "^2.8.0"
   },
   "optionalDependencies": {

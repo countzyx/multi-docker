@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.mjs",
   "scripts": {
-    "start": "node --experimental-modules main.mjs",
+    "dev": "nodemon",
+    "start": "node -r esm main.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
