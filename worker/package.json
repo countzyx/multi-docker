@@ -2,10 +2,10 @@
   "name": "worker",
   "version": "1.0.0",
   "description": "",
-  "main": "main.mjs",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "node --experimental-modules main.mjs",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pedro R. Jimenez <countzyx at gmail dot com>",
