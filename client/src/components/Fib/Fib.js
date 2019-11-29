@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { connect } from 'redux';
+import { connect } from 'react-redux';
 import type { Dispatch, ReduxProps } from 'redux';
 import type { Action, FibState } from '../../shared/types';
 import * as actions from '../../store/actions';
@@ -40,15 +40,6 @@ const Fib = (props: Props) => {
 
   const { error, index, loading, onFetchValueForIndex, onSetIndex, seenIndexes, values } = props;
 
-  if (error) {
-    // eslint-disable-next-line react/jsx-one-expression-per-line
-    return <h1>Error&nbsp;-&nbsp;{error}</h1>;
-  }
-
-  if (loading) {
-    return <Spinner />;
-  }
-
   const onSubmitHandler = React.useCallback(
     (event: SyntheticEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -64,6 +55,15 @@ const Fib = (props: Props) => {
     },
     [onSetIndex]
   );
+
+  if (error) {
+    // eslint-disable-next-line react/jsx-one-expression-per-line
+    return <h1>Error&nbsp;-&nbsp;{error}</h1>;
+  }
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   const indexList = seenIndexes.map(({ number }) => number).join(', ');
   const valueList = Object.keys(values).map(key => (
