@@ -1,27 +1,12 @@
 version: '3.7'
 services:
-  client:
-    build:
-      dockerfile: local.Dockerfile
-      context: ./client
-    volumes:
-      - /home/node/app/node_modules
-      - ./client:/home/node/app
-  nginx:
-    build:
-      dockerfile: local.Dockerfile
-      context: ./nginx
-    ports:
-      - 80:80
-    restart: always
-  postgres:
-    image: 'postgres:12.1-alpine'
-  redis:
-    image: 'redis:5.0-alpine'
   api:
     build:
       dockerfile: local.Dockerfile
       context: ./server
+    depends_on:
+      - 'postgres'
+      - 'redis'
     environment:
       - PGDATABASE=postgres
       - PGHOST=postgres
@@ -33,10 +18,35 @@ services:
     volumes:
       - /home/node/app/node_modules
       - ./server:/home/node/app
+  client:
+    build:
+      dockerfile: local.Dockerfile
+      context: ./client
+    depends_on:
+      - 'api'
+    volumes:
+      - /home/node/app/node_modules
+      - ./client:/home/node/app
+  nginx:
+    build:
+      dockerfile: local.Dockerfile
+      context: ./nginx
+    depends_on:
+      - 'api'
+      - 'client'
+    ports:
+      - 80:80
+    restart: always
+  postgres:
+    image: 'postgres:12.1-alpine'
+  redis:
+    image: 'redis:5.0-alpine'
   worker:
     build:
       dockerfile: local.Dockerfile
       context: ./worker
+    depends_on:
+      - 'redis'
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
