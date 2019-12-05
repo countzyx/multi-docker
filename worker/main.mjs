@@ -2,7 +2,7 @@ import redis from 'redis';
 import keys from './keys.mjs';
 
 const redisClient = redis.createClient({
-  hosts: keys.redisHost,
+  host: keys.redisHost,
   port: keys.redisPort,
   retry_strategy: () => 1000,
 });
@@ -14,6 +14,9 @@ function fib(index) {
 }
 
 sub.on('message', (channel, message) => {
+  console.log(`SUB processing index ${message}`);
   redisClient.hset('values', message, fib(parseInt(message, 10)));
 });
 sub.subscribe('insert');
+
+console.log('Worker up!');
