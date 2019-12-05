@@ -1,10 +1,12 @@
 // @flow
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './App.module.css';
+import Fib from '../components/Fib/Fib';
+import OtherPage from '../components/OtherPage/OtherPage';
 
-const Fib = lazy(() => import('../components/Fib/Fib'));
-const OtherPage = lazy(() => import('../components/OtherPage/OtherPage'));
+// const Fib = React.lazy(() => import('../components/Fib/Fib'));
+// const OtherPage = React.lazy(() => import('../components/OtherPage/OtherPage'));
 
 const App = () => (
   <div className={styles.App}>
@@ -14,13 +16,11 @@ const App = () => (
       <NavLink to="/otherpage">OtherPage</NavLink>
     </header>
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          <Route path="/otherpage" component={OtherPage} />
-          <Route path="/" exact component={Fib} />
-          <Redirect to="/" />
-        </Switch>
-      </Suspense>
+      <Switch>
+        <Route path="/otherpage" component={OtherPage} />
+        <Route path="/" exact component={Fib} />
+        <Redirect to="/" />
+      </Switch>
     </div>
   </div>
 );

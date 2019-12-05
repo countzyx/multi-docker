@@ -16,6 +16,7 @@ const reducer = (state: FibState = initialState, action: Action) => {
 
   switch (action.type) {
     case actionTypes.FETCH_INDEXES_FAIL:
+    case actionTypes.FETCH_VALUE_FOR_INDEX_FAIL:
     case actionTypes.FETCH_VALUES_FAIL: {
       newState.error = action.payload;
       newState.loading = false;
@@ -27,6 +28,12 @@ const reducer = (state: FibState = initialState, action: Action) => {
       newState.seenIndexes = [];
       break;
     }
+    case actionTypes.FETCH_VALUE_FOR_INDEX_START: {
+      newState.error = false;
+      newState.loading = true;
+      newState.index = 0;
+      break;
+    }
     case actionTypes.FETCH_VALUES_START: {
       newState.error = false;
       newState.loading = true;
@@ -36,6 +43,10 @@ const reducer = (state: FibState = initialState, action: Action) => {
     case actionTypes.FETCH_INDEXES_SUCCESS: {
       newState.loading = false;
       newState.seenIndexes = action.payload;
+      break;
+    }
+    case actionTypes.FETCH_VALUE_FOR_INDEX_SUCCESS: {
+      newState.loading = false;
       break;
     }
     case actionTypes.FETCH_VALUES_SUCCESS: {

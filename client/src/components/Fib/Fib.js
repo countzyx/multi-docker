@@ -17,7 +17,7 @@ const mapStateToProps = (state: FibState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  onFetchIndexes: () => dispatch(actions.fetchValuesStart()),
+  onFetchIndexes: () => dispatch(actions.fetchIndexesStart()),
   onFetchValueForIndex: (index: number) => dispatch(actions.fetchValueForIndexStart(index)),
   onFetchValues: () => dispatch(actions.fetchValuesStart()),
   onSetIndex: (index: number) => dispatch(actions.setIndex(index)),
@@ -29,7 +29,18 @@ type Props = {|
 |};
 
 const Fib = (props: Props) => {
-  const { onFetchIndexes, onFetchValues } = props;
+  const {
+    error,
+    index,
+    loading,
+    onFetchIndexes,
+    onFetchValueForIndex,
+    onFetchValues,
+    onSetIndex,
+    seenIndexes,
+    values,
+  } = props;
+
   React.useEffect(() => {
     onFetchIndexes();
   }, [onFetchIndexes]);
@@ -37,8 +48,6 @@ const Fib = (props: Props) => {
   React.useEffect(() => {
     onFetchValues();
   }, [onFetchValues]);
-
-  const { error, index, loading, onFetchValueForIndex, onSetIndex, seenIndexes, values } = props;
 
   const onSubmitHandler = React.useCallback(
     (event: SyntheticEvent<HTMLFormElement>) => {
@@ -58,7 +67,7 @@ const Fib = (props: Props) => {
 
   if (error) {
     // eslint-disable-next-line react/jsx-one-expression-per-line
-    return <h1>Error&nbsp;-&nbsp;{error}</h1>;
+    return <h1>Error&nbsp;-&nbsp;{error.message}</h1>;
   }
 
   if (loading) {
@@ -67,7 +76,7 @@ const Fib = (props: Props) => {
 
   const indexList = seenIndexes.map(({ number }) => number).join(', ');
   const valueList = Object.keys(values).map(key => (
-    <div key={key}>{`For index ${key} I calculated {values[key]}`}</div>
+    <div key={key}>{`For index ${key} I calculated ${values[key]}`}</div>
   ));
 
   return (

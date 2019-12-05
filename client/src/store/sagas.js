@@ -37,6 +37,7 @@ export function* fetchValuesSaga(): Saga<void> {
 export function* watchSagas(): Saga<void> {
   yield all([
     takeEvery(actionTypes.FETCH_INDEXES_START, fetchIndexesSaga),
+    takeEvery(actionTypes.FETCH_VALUE_FOR_INDEX_START, fetchValueForIndexSaga),
     takeEvery(actionTypes.FETCH_VALUES_START, fetchValuesSaga),
   ]);
 }
