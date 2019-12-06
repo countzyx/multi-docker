@@ -1,0 +1,21 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ptpedroj/multi-docker-client-test -f ./client/local.Dockerfile .
+
+script:
+  - docker container run -e CI=true ptpedroj/multi-docker-client-test npm run test
+
+after_success:
+  - docker build -t ptpedroj/multi-docker-api ./server
+  - docker build -t ptpedroj/multi-docker-client ./client
+  - docker build -t ptpedroj/multi-docker-nginx ./nginx
+  - docker build -t ptpedroj/multi-docker-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push ptpedroj/multi-docker-api
+  - docker push ptpedroj/multi-docker-client
+  - docker push ptpedroj/multi-docker-nginx
+  - docker push ptpedroj/multi-docker-worker
