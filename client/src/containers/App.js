@@ -10,10 +10,14 @@ import OtherPage from '../components/OtherPage/OtherPage';
 
 const App = () => (
   <div className={styles.App}>
-    <header className={styles.App_header}>
-      <h1 className={styles.App_title}>Fibonacci Calculator</h1>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/otherpage">OtherPage</NavLink>
+    <header>
+      <h1>Fibonacci Calculator</h1>
+      <NavLink to="/" className={styles.App_link}>
+        Home
+      </NavLink>
+      <NavLink to="/otherpage" className={styles.App_link}>
+        OtherPage
+      </NavLink>
     </header>
     <div>
       <Switch>
